@@ -8,33 +8,32 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
 fake_news = pd.read_csv('https://raw.githubusercontent.com/several27/FakeNewsCorpus/master/news_sample.csv')
-
-#clean_data=[]
-#for i in range(len(fake_news)):
-new_data= clean(fake_news, 
-            lower=True,
-            fix_unicode=True,               
-            to_ascii=True,
-            no_line_breaks=True,
-            no_urls=True,                  
-            no_emails=True,               
-            no_phone_numbers=True,         
-            no_numbers=True,               
-            no_digits=True,
-            normalize_whitespace=True,  
-            no_punct=True,
-            replace_with_punct="",                      
-            replace_with_url="<URL>",
-            replace_with_email="<EMAIL>",
-            replace_with_phone_number="<PHONE>",
-            replace_with_number="<NUM>",
-            replace_with_digit="0",
-            lang="en"
-            )
-   #clean_data.append(new_data)
    
-print(new_data)
+#print(new_data)
+def clean_text(text):
+    # Convert to lowercase
+    text = text.lower()
 
+    # Replace URLs
+    url_pattern = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
+    text = re.sub(r'<URL>', '<URL>', text)
+    # Replace emails
+    email_pattern = re.compile(r'\S+@\S+')
+    text = re.sub(r'<EMAIL>', '<EMAIL>', text)
+
+    # Replace dates (YYYY-MM-DD and DD/MM/YYYY formats)
+    date_pattern = re.compile(r'(\d{4}-\d{2}-\d{2}|\d{2}/\d{2}/\d{4})')
+    text = date_pattern.sub('<DATE>', text)
+
+    # Replace numbers
+    num_pattern = re.compile(r'\b\d+\b')
+    text = re.sub(r'<NUMBER>', '<NUMBER>', text)
+
+    # Replace multiple spaces with a single space
+    text = re.sub(r'[^\w\s]', '', text)
+
+    return text
+fake_news['content_clean_maual'] = fake_news['content'].apply(clean_text)
 # Load the necessary NLTK data
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -48,3 +47,21 @@ fake_news['content_tokens'] = fake_news['content_clean_manual'].apply(word_token
 # Stop word removal
 stop_words = set(stopwords.words('english'))
 fake_news['content_clean'] = fake_news['content_tokens'].apply(lambda x: [word for word in x if word not in stop_words])
+
+# Calculating the number of unique words in the data after preprocessing
+cleaned_text = fake_news['content_clean'].explode().unique()
+num_unique_words_after_preprocessing = len(cleaned_text)
+
+# Calculating how frequently each of these words is used in the dataset
+word_counts = fake_news['content_clean'].explode().value_counts()
+
+# Sort this list, so that the most frequent word appears first
+word_counts = word_counts.sort_values(ascending=False)
+
+# using matplotlib to plot the data
+plt.figure(figsize=(15, 10))
+plt.barh(word_counts.index[:50],word_counts.values[:50])
+plt.xlabel('Frequency')
+plt.ylabel('Word')
+plt.title('50 Most Frequent Words in the Dataset')
+plt.show()
