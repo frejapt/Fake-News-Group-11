@@ -33,6 +33,7 @@ def clean_text(text):
     text = re.sub(r'[^\w\s]', '', text)
 
     return text
+
 fake_news['content_clean_maual'] = fake_news['content'].apply(clean_text)
 # Load the necessary NLTK data
 nltk.download('punkt')
