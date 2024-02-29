@@ -6,9 +6,13 @@ import matplotlib.pyplot as plt
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+
 
 fake_news = pd.read_csv('https://raw.githubusercontent.com/several27/FakeNewsCorpus/master/news_sample.csv')
-   
+
+ps = PorterStemmer()
+
 #print(new_data)
 def clean_text(text):
     # Convert to lowercase
@@ -44,9 +48,11 @@ fake_news['content_clean_manual'] = fake_news['content'].apply(clean_text)
 # Tokenization
 fake_news['content_tokens'] = fake_news['content_clean_manual'].apply(word_tokenize)
 
+# Stemming
+fake_news['content_stemming'] = fake_news['content_tokens'].apply(lambda x: [ps.stem(word) for word in x])
 # Stop word removal
 stop_words = set(stopwords.words('english'))
-fake_news['content_clean'] = fake_news['content_tokens'].apply(lambda x: [word for word in x if word not in stop_words])
+fake_news['content_clean'] = fake_news['content_stemming'].apply(lambda x: [word for word in x if word not in stop_words])
 
 # Calculating the number of unique words in the data after preprocessing
 cleaned_text = fake_news['content_clean'].explode().unique()
