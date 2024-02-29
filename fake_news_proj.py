@@ -55,19 +55,20 @@ stop_words = set(stopwords.words('english'))
 fake_news['content_clean'] = fake_news['content_stemming'].apply(lambda x: [word for word in x if word not in stop_words])
 
 # Calculating the number of unique words in the data after preprocessing
-cleaned_text = fake_news['content_clean'].explode().unique()
-num_unique_words_after_preprocessing = len(cleaned_text)
+#cleaned_text = fake_news['content_clean'].explode().unique()
+#num_unique_words_after_preprocessing = len(cleaned_text)
 
 # Calculating how frequently each of these words is used in the dataset
-word_counts = fake_news['content_clean'].explode().value_counts()
+#word_counts = fake_news['content_clean'].explode().value_counts()
 
 # Sort this list, so that the most frequent word appears first
-word_counts = word_counts.sort_values(ascending=False)
+#word_counts = word_counts.sort_values(ascending=False)
 
 # using matplotlib to plot the data
-plt.figure(figsize=(15, 10))
-plt.barh(word_counts.index[:50],word_counts.values[:50])
-plt.xlabel('Frequency')
-plt.ylabel('Word')
-plt.title('50 Most Frequent Words in the Dataset')
-plt.show()
+#plt.figure(figsize=(15, 10))
+#plt.barh(word_counts.index[:50],word_counts.values[:50])
+#plt.xlabel('Frequency')
+#plt.ylabel('Word')
+#plt.title('50 Most Frequent Words in the Dataset')
+#plt.show()
+
