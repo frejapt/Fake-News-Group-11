@@ -6,9 +6,13 @@ import matplotlib.pyplot as plt
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+
 
 fake_news = pd.read_csv('https://raw.githubusercontent.com/several27/FakeNewsCorpus/master/news_sample.csv')
-   
+
+ps = PorterStemmer()
+
 #print(new_data)
 def clean_text(text):
     # Convert to lowercase
@@ -45,24 +49,27 @@ fake_news['content_clean_manual'] = fake_news['content'].apply(clean_text)
 # Tokenization
 fake_news['content_tokens'] = fake_news['content_clean_manual'].apply(word_tokenize)
 
+# Stemming
+fake_news['content_stemming'] = fake_news['content_tokens'].apply(lambda x: [ps.stem(word) for word in x])
 # Stop word removal
 stop_words = set(stopwords.words('english'))
-fake_news['content_clean'] = fake_news['content_tokens'].apply(lambda x: [word for word in x if word not in stop_words])
+fake_news['content_clean'] = fake_news['content_stemming'].apply(lambda x: [word for word in x if word not in stop_words])
 
 # Calculating the number of unique words in the data after preprocessing
-cleaned_text = fake_news['content_clean'].explode().unique()
-num_unique_words_after_preprocessing = len(cleaned_text)
+#cleaned_text = fake_news['content_clean'].explode().unique()
+#num_unique_words_after_preprocessing = len(cleaned_text)
 
 # Calculating how frequently each of these words is used in the dataset
-word_counts = fake_news['content_clean'].explode().value_counts()
+#word_counts = fake_news['content_clean'].explode().value_counts()
 
 # Sort this list, so that the most frequent word appears first
-word_counts = word_counts.sort_values(ascending=False)
+#word_counts = word_counts.sort_values(ascending=False)
 
 # using matplotlib to plot the data
-plt.figure(figsize=(15, 10))
-plt.barh(word_counts.index[:50],word_counts.values[:50])
-plt.xlabel('Frequency')
-plt.ylabel('Word')
-plt.title('50 Most Frequent Words in the Dataset')
-plt.show()
+#plt.figure(figsize=(15, 10))
+#plt.barh(word_counts.index[:50],word_counts.values[:50])
+#plt.xlabel('Frequency')
+#plt.ylabel('Word')
+#plt.title('50 Most Frequent Words in the Dataset')
+#plt.show()
+
