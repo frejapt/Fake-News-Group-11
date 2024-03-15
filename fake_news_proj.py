@@ -20,19 +20,19 @@ def clean_text(text):
 
     # Replace URLs
     url_pattern = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
-    text = url_pattern.sub('', text)
+    text = url_pattern.sub('<URL>', text)
 
     # Replace emails
     email_pattern = re.compile(r'\S+@\S+')
-    text = email_pattern.sub('', text)
+    text = email_pattern.sub('<EMAIL>', text)
 
     # Replace dates (YYYY-MM-DD and DD/MM/YYYY formats)
     date_pattern = re.compile(r'(\d{4}-\d{2}-\d{2}|\d{2}/\d{2}/\d{4})')
-    text = date_pattern.sub('', text)
+    text = date_pattern.sub('<DATE>', text)
 
     # Replace numbers
     num_pattern = re.compile(r'\b\d+\b')
-    text = num_pattern.sub('', text)
+    text = num_pattern.sub('<NUM>', text)
 
     # Replace multiple spaces with a single space
     text = re.sub(r'[^\w\s]', '', text)
