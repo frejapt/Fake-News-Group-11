@@ -5,7 +5,7 @@ Our code for our exam project for Grundlæggende Data Science, Datalogisk Instit
 
 ### Dependencies
 
-* Python == 3.
+* Python >= 3.
 * nltk==3.8.1
 * numpy==1.26.4
 * pandas==2.2.1
