@@ -27,7 +27,7 @@ Our code for our exam project for Grundlæggende Data Science, Datalogisk Instit
 * The program can be run as a Jupyter Notebook, by running each code block separately, or running all blocks from the top.
 
 ## Authors
-Freja Pedrero Thoning
-Josephine Bianca Uyet Danielsen
-Le Andersson
+* Freja Pedrero Thoning
+* Josephine Bianca Uyet Danielsen
+* Le Andersson
 
