@@ -1,6 +1,7 @@
 # Group Fake News Project
 
 ## Description
+Our code for our exam project for Grundlæggende Data Science, Datalogisk Institut, Københavns Universitet.
 
 ### Dependencies
 
@@ -14,7 +15,7 @@
 
 ### Installing
 
-* Create a python environment
+* Create a python environment with the required dependencies
 * Create a folder and download to this folder the following:
   * fake_news_proj.ipynb
   * 995,000_rows.csv
@@ -25,4 +26,8 @@
 
 * The program can be run as a Jupyter Notebook, by running each code block separately, or running all blocks from the top.
 
+## Authors
+Freja Pedrero Thoning
+Josephine Bianca Uyet Danielsen
+Le Andersson
 
