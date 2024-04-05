@@ -18,7 +18,7 @@ Our code for our exam project for Grundlæggende Data Science, Datalogisk Instit
 * Create a python environment with the required dependencies
 * Create a folder and download to this folder the following:
   * fake_news_proj.ipynb
-  * 995,000_rows.csv
+  * 995,000_rows.csv from https://absalon.ku.dk/courses/72550/files/8102667?wrap=1
   * test.tsv
 
 
